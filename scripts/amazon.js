@@ -69,6 +69,7 @@ function updateCart(productId, timeout){
   timeout = setTimeout(() => {
     addedToCartElem.classList.remove('added-to-cart-visible');
   }, 2000);
+  return timeout;
 }
 
 document.querySelectorAll('.js-add-to-cart')
@@ -79,7 +80,7 @@ document.querySelectorAll('.js-add-to-cart')
       const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
       
       addToCart(productId, quantitySelector);
-      updateCart(productId, timeout);
+      timeout=updateCart(productId, timeout);
       
     });
   });
