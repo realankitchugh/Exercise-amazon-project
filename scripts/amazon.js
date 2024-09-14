@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 let html='';
 products.forEach((product) => {
@@ -55,40 +55,32 @@ products.forEach((product) => {
 });
 document.querySelector('.products-grid').innerHTML+=html;
 
+
+
+function updateCart(productId, timeout){
+  let finalQuantity=0;
+  cart.forEach((cartItem) => {
+    finalQuantity += cartItem.quantity;
+  });
+  document.querySelector('.js-cart-quantity').innerHTML = `${finalQuantity}`;
+  clearTimeout(timeout);
+  const addedToCartElem = document.querySelector(`.js-added-to-cart-${productId}`);
+  addedToCartElem.classList.add('added-to-cart-visible');
+  timeout = setTimeout(() => {
+    addedToCartElem.classList.remove('added-to-cart-visible');
+  }, 2000);
+}
+
 document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     let timeout;
     button.addEventListener('click', () => {
       const { productId } = button.dataset;
       const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-      console.log(quantitySelector.value);
-      let matchingItem;
-      cart.forEach((cartItem) => {
-        if(cartItem.productId === productId){
-          matchingItem = cartItem;
-        }
-      });
       
-      if(matchingItem){
-        matchingItem.quantity+=Number(quantitySelector.value);
-      }
-      else{
-        cart.push({
-          productId,
-          quantity: Number(quantitySelector.value)
-        });
-      }
-      let finalQuantity=0;
-      cart.forEach((item) => {
-        finalQuantity += item.quantity;
-      });
-      document.querySelector('.js-cart-quantity').innerHTML = `${finalQuantity}`;
-      clearTimeout(timeout);
-      const addedToCartElem = document.querySelector(`.js-added-to-cart-${productId}`);
-      addedToCartElem.classList.add('added-to-cart-visible');
-      timeout = setTimeout(() => {
-        addedToCartElem.classList.remove('added-to-cart-visible');
-      }, 2000);
+      addToCart(productId, quantitySelector);
+      updateCart(productId, timeout);
+      
     });
   });
 
