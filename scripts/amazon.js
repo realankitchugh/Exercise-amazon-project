@@ -58,7 +58,8 @@ products.forEach((product) => {
 });
 document.querySelector('.products-grid').innerHTML+=html;
 
-
+document.querySelector('.js-cart-quantity')
+  .innerHTML=totalCartQuantity();
 
 function updateCart(productId, timeout){
   let finalQuantity = totalCartQuantity();

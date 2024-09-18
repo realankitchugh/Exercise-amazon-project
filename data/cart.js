@@ -1,7 +1,5 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
-console.log(cart);
 if(!cart){
-  console.log(cart);
   cart=[{
       productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
       quantity: 2
@@ -54,4 +52,15 @@ export function totalCartQuantity(){
     finalQuantity += cartItem.quantity;
   });
   return finalQuantity;
+}
+
+export function updateQuantity(productId, newQuantity){
+  let matchingItem;
+  cart.forEach((item) => {
+    if(productId === item.productId){
+      matchingItem = item;
+    }
+  });
+  matchingItem.quantity = newQuantity;
+  saveToStorage();
 }
