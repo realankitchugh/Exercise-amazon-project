@@ -1,6 +1,6 @@
 import {cart, addToCart, totalCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
-import {formatCurrency} from './Utils/money.js';
+import formatCurrency from './Utils/money.js';
 
 
 let html='';
