@@ -140,7 +140,7 @@ document.querySelectorAll('.js-delete-link')
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
       removeFromCart(productId);
-      updateQuantity();
+      updateCartQuantity();
       const container=document.querySelector(`.js-cart-item-container-${productId}`);
       container.remove();
     });
