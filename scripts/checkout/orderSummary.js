@@ -5,6 +5,7 @@ import formatCurrency from '../Utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 // const today = dayjs();
 // console.log(today.format('dddd'));
 // const date = today.add(3, 'day');
@@ -111,11 +112,11 @@ export function renderOrderSummary(){
 
   document.querySelector('.js-order-summary')
     .innerHTML=cartSummaryHTML;
-  updateCartQuantity();
+  // updateCartQuantity();
 
   function updateCartQuantity(){
     const totalQuantity = totalCartQuantity();
-    document.querySelector('.js-return-to-home-link')
+    document.querySelector('.js-checkout-header')
     .innerHTML = `${totalQuantity} items`;
   }
 
@@ -138,9 +139,12 @@ export function renderOrderSummary(){
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.classList.remove('is-editing-quantity');
         updateQuantity(productId, newQuant);
-        const quantityLabel = document.querySelector(`.js-quantity-label-${productId}`);
-        quantityLabel.innerHTML = newQuant;
-        updateCartQuantity();
+        // const quantityLabel = document.querySelector(`.js-quantity-label-${productId}`);
+        // quantityLabel.innerHTML = newQuant;
+        renderCheckoutHeader();
+        renderOrderSummary();
+        // updateCartQuantity();
+        renderPaymentSummary();
       });
     });
 
@@ -152,6 +156,7 @@ export function renderOrderSummary(){
         // updateCartQuantity();
         // const container=document.querySelector(`.js-cart-item-container-${productId}`);
         // container.remove();
+        renderCheckoutHeader();
         renderOrderSummary();
         renderPaymentSummary();
       });
