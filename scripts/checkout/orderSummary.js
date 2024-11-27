@@ -9,12 +9,12 @@ import { renderPaymentSummary } from './paymentSummary.js';
 // console.log(today.format('dddd'));
 // const date = today.add(3, 'day');
 // console.log(isWeekend(date));
-// function isWeekend(date){
-//   if(date.format('dddd') === 'Saturday' || date.format('dddd') === 'Sunday'){
-//     return true;
-//   }
-//   return false;
-// }
+function isWeekend(date){
+  if(date.format('dddd') === 'Saturday' || date.format('dddd') === 'Sunday'){
+    return true;
+  }
+  return false;
+}
 // console.log(date.format('dddd'));
 export function renderOrderSummary(){
 
@@ -78,11 +78,15 @@ export function renderOrderSummary(){
     let html='';
     deliveryOptions.forEach((deliveryOption) => {
       const today = dayjs();
-      const deliveryDate = today.add(
+      let deliveryDate = today.add(
         deliveryOption.deliveryDays,
         'days'
       );
+      while(isWeekend(deliveryDate)){
+        deliveryDate=deliveryDate.add(1, 'days');
+      }
       const dateString = deliveryDate.format('dddd, MMMM D');
+      
       const priceString = deliveryOption.priceCents === 0 ? 'Free' : `$${formatCurrency(deliveryOption.priceCents)} -`;
       const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
       html+=`
