@@ -80,7 +80,7 @@ document.querySelectorAll('.js-add-to-cart')
       const { productId } = button.dataset;
       const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
       
-      addToCart(productId, quantitySelector);
+      addToCart(productId, quantitySelector.value);
       timeout=updateCart(productId, timeout);
       
     });
